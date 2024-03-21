@@ -78,18 +78,23 @@ main{
   
         background-color: transparent;
         cursor: pointer;
+
+        &:disabled{
+          opacity: 0.8;
+        }
   
         &.btn-primary{
           background-color: $primary-color;
           color: $global-color;
           box-shadow:0px 12.116715431213379px 24.233430862426758px rgba(253.0000001192093, 116.00000068545341, 1.0000000591389835, 0.30000001192092896);
+        
         }
   
         &.btn-secondary{
           border: 1px solid $primary-color;
           color: $primary-color;
         }
-  
+
       }
     }
     
