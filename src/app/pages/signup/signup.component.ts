@@ -6,13 +6,15 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-interface LoginForm {
+interface SignupForm {
+  name: FormControl,
   email: FormControl,
-  password: FormControl
+  password: FormControl,
+  passwordConfirm: FormControl
 }
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-signup',
   standalone: true,
   imports: [
     DefaultLoginLayoutComponent,
@@ -21,36 +23,39 @@ interface LoginForm {
   ],
 
   providers: [LoginService],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'] 
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'] 
   
 })
 
-export class LoginComponent {
-  loginForm!: FormGroup<LoginForm>;
+export class SignUpComponent {
+  signupForm!: FormGroup<SignupForm>;
   
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private toastService: ToastrService
-
+    private toastService: ToastrService // Injete o ToastrService
   ) {
-    this.loginForm = new FormGroup({
+    this.signupForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)])
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)])
     });
   } 
 
   async Submit() {
     try {
-      const response = await this.loginService.login(this.loginForm.value.email, this.loginForm.value.password);
-      this.toastService.success("Login feito com sucesso!");
+      const response = await this.loginService.login(this.signupForm.value.email, this.signupForm.value.password);
+      this.toastService.success("Cadastro feito com sucesso!");
     } catch (error) {
       this.toastService.error("Error, tente novamente!");
     }
   }
   
+
   navigate(){
-    this.router.navigate(["signup"]);
-  } 
+    this.router.navigate(['login'])
+  }
+ 
 }
