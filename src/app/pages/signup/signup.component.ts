@@ -34,7 +34,7 @@ export class SignUpComponent {
   constructor(
     private router: Router,
     private loginService: LoginService,
-    private toastService: ToastrService // Injete o ToastrService
+    private toastService: ToastrService
   ) {
     this.signupForm = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
